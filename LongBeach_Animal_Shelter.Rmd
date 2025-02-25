@@ -1,0 +1,59 @@
+---
+title: "LONG BEACH ANIMAL SHELTER PROJECT"
+author: "Thu Nguyen"
+date: "2025-02-25"
+output: html_document
+---
+### MEET THE ANIMALS
+
+The `animals` dataset comprises of the intake and outcome record from Long Beach Animal Shelter.
+
+1. How has the number of per adoptions changed over years ?
+
+2. Which type of pets are adopted most often ?
+```{r}
+# Data Preparation
+library(lubridate)
+library(dplyr)
+library(ggplot2)
+library(tidytuesdayR)
+
+tuesdata <- tidytuesdayR::tt_load(2025, week = 9)
+adoptions <- tuesdata$longbeach
+str(adoptions)
+
+adoptions$Date <- as.Date(adoptions$outcome_date, format = "%Y-%m-%d")
+adoptions$Year <- year(adoptions$Date)
+
+# Question 1:
+
+adoptions_by_year <- adoptions %>%
+  group_by(Year) %>%
+  summarise(TotalAdoptions = n()) %>%
+  arrange(Year)
+print(adoptions_by_year) # summary tables
+
+ggplot(adoptions_by_year, aes(x = Year, y = TotalAdoptions)) + 
+  geom_line(color = "darkblue", size = 1) +
+  geom_point(color = "red", size = 2) +
+  labs(title = "Number of Animals Adoptions Over The Years",
+       x = "Year",
+       y = "Total Adoptions") +
+  theme_minimal()
+
+# Question 2: 
+
+adoptions_by_pet <- adoptions %>%
+  group_by(animal_type) %>%
+  summarise(TotalAdoptions = n()) %>%
+  arrange(desc(TotalAdoptions))
+print(adoptions_by_pet)
+
+ggplot(adoptions_by_pet, aes(x = reorder(animal_type, TotalAdoptions), y = TotalAdoptions)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  coord_flip() +
+  labs(title = "Most Adopted Animal Types",
+       x = "Animal Type",
+       y = "Number of Adoptions") +
+  theme_minimal()
+

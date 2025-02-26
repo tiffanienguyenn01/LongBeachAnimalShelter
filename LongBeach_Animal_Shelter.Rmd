@@ -41,6 +41,9 @@ ggplot(adoptions_by_year, aes(x = Year, y = TotalAdoptions)) +
        y = "Total Adoptions") +
   theme_minimal()
 
+# Based off the analysis and the data, there was an initially high level of adoptions in the earlier years, suggesting a period when many families and individuals were ready and eager to bring home new pets. However, as time moved on, adoption numbers dipped, hitting their lowest point around 2020, which was really odd. As there was a lot of news talking about how during the COVID-19, many families and individuals welcomed new pets from shelters.During periods of stress or instability, adoption rates often fall, as the demands of daily life overshadow the dream of bringing a furry companion home. Starting from 2022, the numbers began a steady recovery, climbing each subsequent year. By 2024, adoptions are higher than they've been in quite some time.
+```
+```{r}
 # Question 2: 
 
 adoptions_by_pet <- adoptions %>%
@@ -57,3 +60,5 @@ ggplot(adoptions_by_pet, aes(x = reorder(animal_type, TotalAdoptions), y = Total
        y = "Number of Adoptions") +
   theme_minimal()
 
+# From the chart, it’s clear that cats have taken the top spot as the most frequently adopted animal type, followed closely by dogs. After these two perennial favorites, adoption numbers drop considerably for other types of pets such as birds, rabbits, reptiles, and small mammals like guinea pigs.
+```
